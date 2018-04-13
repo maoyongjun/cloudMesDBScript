@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="org.foxconn.dao.AllTableDao">
+ 	<select id="findAll"  resultType="org.foxconn.entity.AllTable">
+ 	   SELECT TABLESPACE_NAME,OWNER,TABLE_NAME ,B.DESCRIPITION 
+		FROM ALL_TABLES A RIGHT JOIN TABLEDESC B ON A.TABLE_NAME=B.TABLENAME
+		WHERE OWNER IN ('SFCBASE','SFCRUNTIME') 
+		AND TABLE_NAME NOT LIKE '%_EX'
+<!-- 		ORDER BY TABLESPACE_NAME,TABLE_NAME -->
+ 		ORDER BY B.SORTNO
+ 	</select>
+ 	
+ 	<select id="findAllOrderbyTableName"  resultType="org.foxconn.entity.AllTable">
+ 	   SELECT TABLESPACE_NAME,OWNER,TABLE_NAME ,B.DESCRIPITION 
+		FROM ALL_TABLES A RIGHT JOIN TABLEDESC B ON A.TABLE_NAME=B.TABLENAME
+		WHERE OWNER IN ('SFCBASE','SFCRUNTIME') 
+		AND TABLE_NAME NOT LIKE '%_EX'
+<!-- 		ORDER BY TABLESPACE_NAME,TABLE_NAME  -->
+		ORDER BY B.SORTNO
+ 	</select>
+ 	
+ 	<select id="findByName"   parameterType="string"   resultType="org.foxconn.entity.AllTable">
+ 	   SELECT TABLESPACE_NAME,OWNER,TABLE_NAME ,B.DESCRIPITION ,B.SORTNO
+		FROM ALL_TABLES A RIGHT JOIN TABLEDESC B ON A.TABLE_NAME=B.TABLENAME
+		WHERE OWNER IN ('SFCBASE','SFCRUNTIME') 
+		AND TABLE_NAME NOT LIKE '%_EX'
+		and TABLE_NAME = #{tableName}
+		ORDER BY B.SORTNO
+ 	</select>
+ 	
+ </mapper>       

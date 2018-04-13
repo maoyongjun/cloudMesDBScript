@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="org.foxconn.dao.All_SYNONYMSDao">
+ 	<select id="findAll"  resultType="org.foxconn.entity.ALL_SYNONYMS">
+ 	    SELECT * FROM ALL_SYNONYMS WHERE TABLE_OWNER IN ('SFCRUNTIME','SFCBASE','SFC')
+ 		
+ 	</select>
+ 	
+ 	<select id="findByName"  parameterType="string" resultType="org.foxconn.entity.ALL_SYNONYMS">
+ 	    SELECT * FROM ALL_SYNONYMS WHERE TABLE_OWNER IN ('SFCRUNTIME','SFCBASE','SFC')
+ 	    and TABLE_NAME =#{tableName}
+ 		
+ 	</select>
+ 	
+ </mapper>        
+ 

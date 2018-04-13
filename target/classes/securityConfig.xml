@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	<context:component-scan base-package="org.foxconn"/>
+	<aop:aspectj-autoproxy proxy-target-class="true"/> 
+	<!-- 开启mvc注解标记handlermapping映射,支持@resquestMapping,@responsebody@exceptionhandler -->
+	<mvc:annotation-driven content-negotiation-manager="cnManager"/>
+	<!-- spring mvc控制器如果后缀匹配由*.do改为*。html时，json会出现406错误，故加入如下配置 -->
+	<beans:bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">  
+       <beans:property name="favorPathExtension" value="false"/>  
+       <beans:property name="defaultContentType" value="text/html"/>  
+       <beans:property name="mediaTypes">  
+           <beans:map>  
+               <beans:entry key="xml" value="application/xml"/>  
+               <beans:entry key="json" value="application/json"/>
+           </beans:map>  
+       </beans:property>  
+    </beans:bean>
+	<beans:bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<beans:property name="sqlSessionFactory" ref="ssf"></beans:property>
+		<beans:property name="basePackage" value="org.foxconn.dao" ></beans:property>
+	</beans:bean>
+	<!-- 开启扫描 -->
+	<beans:bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+		<beans:property name="mapperLocations" value="classpath:org/foxconn/sql/*.xml"></beans:property>
+		<beans:property name="plugins">
+	        <beans:array>
+	            <beans:bean id="pageHelper" class="com.github.pagehelper.PageHelper">
+			        <beans:property name="properties">
+				          <beans:value>
+				            dialect=sqlserver
+				          </beans:value>
+				     </beans:property>
+				 </beans:bean>
+	        </beans:array>
+        </beans:property> 
+    </beans:bean>
+       
+     <beans:bean id="dataSource" class="org.foxconn.database.DynamicDataSource">
+        <beans:property name="targetDataSources">
+            <beans:map key-type="java.lang.String">
+        		<beans:entry key="dataSource1" value-ref="db1"></beans:entry>
+            </beans:map>
+        </beans:property>
+   		 <!-- 默认目标数据源为你主库数据源 -->
+        <beans:property name="defaultTargetDataSource" ref="db12"/>
+    </beans:bean>
+    
+    <!-- 配置事务管理组件 -->
+	<beans:bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+	</beans:bean>
+	 <!-- 注解事务-->
+	<!-- <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" order="2"/> -->
+	 <!-- 声明式事务 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager"  >
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="remove*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config  proxy-target-class="true">
+		<aop:advisor advice-ref="txAdvice" pointcut="within(org.foxconn.**.service..*)" order="2"/>
+	</aop:config>
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/"></beans:property>
+		<beans:property name="suffix" value=".jsp"></beans:property>
+	</beans:bean>
+    	     
+    <!-- 数据库的配置 -->
+    <beans:bean id="db1" class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></beans:property>
+		<beans:property name="url" value="jdbc:sqlserver://localhost;DatabaseName=efoxsfclxhp_test"></beans:property>
+		<beans:property name="username" value=""></beans:property>
+		<beans:property name="password" value=""></beans:property>
+	</beans:bean>
+	 <beans:bean id="db12" class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></beans:property>
+		<beans:property name="url" value="jdbc:oracle:thin:@//10.120.147.250:1521/SFCTEST"></beans:property>
+		<beans:property name="username" value="H7108464"></beans:property>
+		<beans:property name="password" value="yongjun"></beans:property>
+	</beans:bean>
+</beans:beans>

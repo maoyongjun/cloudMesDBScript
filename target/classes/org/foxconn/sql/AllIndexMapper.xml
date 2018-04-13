@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="org.foxconn.dao.AllIndexDao">
+ 	<select id="findAll"  resultType="org.foxconn.entity.AllIndex">
+ 	    SELECT  A.tablespace_name, A.owner,A.table_owner,A.table_name,B.COLUMN_NAME,A.index_name 
+		FROM ALL_INDEXES A, ALL_IND_COLUMNS B WHERE A.OWNER IN ('SFC','SFCBASE','SFCRUNTIME')
+		AND A.index_name =B.index_name 
+		AND A.TABLE_NAME NOT LIKE '%_EX'
+		ORDER BY A.tablespace_name,A.table_owner,A.OWNER,A.TABLE_NAME
+		 		
+ 	</select>
+ 	
+ 	<select id="findByName"  parameterType="string" resultType="org.foxconn.entity.AllIndex">
+ 	    SELECT  A.tablespace_name, A.owner,A.table_owner,A.table_name,B.COLUMN_NAME,A.index_name 
+		FROM ALL_INDEXES A, ALL_IND_COLUMNS B WHERE A.OWNER IN ('SFC','SFCBASE','SFCRUNTIME')
+		AND A.index_name =B.index_name 
+		AND A.TABLE_NAME NOT LIKE '%_EX'
+		AND A.TABLE_NAME =#{tableName}
+		ORDER BY A.tablespace_name,A.table_owner,A.OWNER,A.TABLE_NAME
+		 		
+ 	</select>
+ 	
+ </mapper>       

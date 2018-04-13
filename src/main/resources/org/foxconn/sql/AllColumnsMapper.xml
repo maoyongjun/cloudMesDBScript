@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="org.foxconn.dao.AllColumnsDao">
+ 	<select id="findAll"  resultType="org.foxconn.entity.AllColumns">
+ 	    SELECT T1.OWNER,T1.TABLE_NAME,T1.COLUMN_NAME,T1.NULLABLE,T1.DATA_TYPE,T1.DATA_LENGTH,
+ 	    T2.COMMENTS,t1.DATA_DEFAULT
+ 	    FROM all_tab_cols T1, all_col_comments T2 
+		WHERE  T1.TABLE_NAME = T2.TABLE_NAME 
+		       AND T1.COLUMN_NAME = T2.COLUMN_NAME  
+		       AND T1.OWNER 
+		       IN ('SFCBASE','SFCRUNTIME','SFC') 
+		       AND T1.TABLE_NAME NOT LIKE '%_EX'
+		       order by T1.OWNER,T1.TABLE_NAME ,COLUMN_ID
+ 		
+ 	</select>
+ 	
+ 	<select id="findByName"  parameterType="string"   resultType="org.foxconn.entity.AllColumns">
+ 	    SELECT T1.OWNER,T1.TABLE_NAME,T1.COLUMN_NAME,T1.NULLABLE,T1.DATA_TYPE,T1.DATA_LENGTH,
+ 	    T2.COMMENTS,t1.DATA_DEFAULT
+ 	    FROM all_tab_cols T1, all_col_comments T2 
+		WHERE  T1.TABLE_NAME = T2.TABLE_NAME 
+		       AND T1.COLUMN_NAME = T2.COLUMN_NAME  
+		       AND T1.OWNER 
+		       IN ('SFCBASE','SFCRUNTIME','SFC') 
+		       AND T1.TABLE_NAME NOT LIKE '%_EX'
+		       AND T1.TABLE_NAME = #{tableName}
+		       order by T1.OWNER,T1.TABLE_NAME ,COLUMN_ID
+ 		
+ 	</select>
+ 	
+ </mapper>        
+ 
