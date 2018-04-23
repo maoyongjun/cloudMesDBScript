@@ -7,7 +7,7 @@
 		FROM ALL_INDEXES A, ALL_IND_COLUMNS B WHERE A.OWNER IN ('SFC','SFCBASE','SFCRUNTIME')
 		AND A.index_name =B.index_name 
 		AND A.TABLE_NAME NOT LIKE '%_EX'
-		ORDER BY A.tablespace_name,A.table_owner,A.OWNER,A.TABLE_NAME
+		ORDER BY A.tablespace_name,A.table_owner,A.OWNER,A.TABLE_NAME,A.index_name,B.COLUMN_POSITION
 		 		
  	</select>
  	
@@ -17,7 +17,7 @@
 		AND A.index_name =B.index_name 
 		AND A.TABLE_NAME NOT LIKE '%_EX'
 		AND A.TABLE_NAME =#{tableName}
-		ORDER BY A.tablespace_name,A.table_owner,A.OWNER,A.TABLE_NAME
+		ORDER BY A.tablespace_name,A.table_owner,A.OWNER,A.TABLE_NAME,A.index_name,B.COLUMN_POSITION
 		 		
  	</select>
  	

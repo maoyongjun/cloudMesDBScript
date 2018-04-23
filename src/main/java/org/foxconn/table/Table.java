@@ -154,8 +154,11 @@ public class Table implements Comparable<Table>{
 //			}
 			if(sql.indexOf(tempStr)!=-1){
 				int startIndex = sql.lastIndexOf(tempStr);
-				int length = tempStr.length();
-				sql.replace(startIndex, startIndex+length, tempStr+columnName+",");
+				int endIndex =  sql.indexOf(")", startIndex);//找到右括号
+				//CREATE INDEX SFCRUNTIME.IDX_R_WO_TEXT0 ON SFCRUNTIME.R_WO_TEXT(AUFNR) using index tablespace RMES;
+				//将右括号替换成 ，逗号 加列名 加右括号。
+				sql.replace(endIndex, endIndex+1, ","+columnName+")");
+				
 				
 			}else{
 				sql.append("\t"+tempStr+columnName+")"+(isIdx?" using index":"")+" tablespace "+tableSpaceName+";"+"\n");
