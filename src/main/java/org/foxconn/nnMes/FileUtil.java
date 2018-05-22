@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.foxconn.dao.AllColumnsDao;
+import org.foxconn.entity.ConfigEntity;
+import org.foxconn.util.ContextUtil;
+
 public class FileUtil {
 		public static boolean writeStringToDisk(String xmlString){
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -18,8 +22,9 @@ public class FileUtil {
 			}
 			FileWriter fileWriter=null;
 			try {
+				ConfigEntity configEntity= ContextUtil.getContext().getBean("configEntity",ConfigEntity.class);
 //				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM");
-				String baseLocalDir = "C:\\Users\\nnfoxconn\\Desktop\\cloudMesPerson\\MES_Project.document\\數據庫建制";
+				String baseLocalDir = configEntity.getFileDir();
 				File file = new File(baseLocalDir+"\\sql");
 				if(!file.exists()){
 					file.mkdirs();
