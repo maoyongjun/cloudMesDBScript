@@ -206,11 +206,6 @@
 			<artifactId>commons-net</artifactId>
 			<version>1.4.1</version>
 		</dependency>
-		<dependency>
-			<groupId>com.sap.sapjco3</groupId>
-			<artifactId>sapjco3</artifactId>
-			<version>1.0</version>
-		</dependency>
 	</dependencies>
 	<build>
 

@@ -99,4 +99,7 @@
 		<beans:property name="username" value="H7108464"></beans:property>
 		<beans:property name="password" value="yongjun"></beans:property>
 	</beans:bean>
+	<beans:bean  id ='configEntity' class ="org.foxconn.entity.ConfigEntity">
+		<beans:property name="fileDir" value="C:\\Users\\nnfoxconn\\Desktop\\cloudMesPerson\\MES_Project.document\\數據庫建制"></beans:property>
+	</beans:bean>
 </beans:beans>
