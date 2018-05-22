@@ -22,7 +22,7 @@ Class-Path: lib/spring-beans-3.2.8.RELEASE.jar lib/spring-core-3.2.8.R
  lib/poi-ooxml-schemas-3.9.jar lib/xmlbeans-2.3.0.jar lib/stax-api-1.0
  .1.jar lib/dom4j-1.6.1.jar lib/xml-apis-1.0.b2.jar lib/ant-1.8.2.jar 
  lib/ant-launcher-1.8.2.jar lib/commons-net-1.4.1.jar lib/oro-2.0.8.ja
- r lib/sapjco3-1.0.jar
+ r
 Build-Jdk: 1.8.0_101
 Created-By: Maven Integration for Eclipse
 Main-Class: org.foxconn.nnMes.TestnnMES

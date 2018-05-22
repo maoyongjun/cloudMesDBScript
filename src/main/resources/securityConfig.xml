@@ -95,11 +95,11 @@
 	</beans:bean>
 	 <beans:bean id="db12" class="org.apache.commons.dbcp.BasicDataSource">
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></beans:property>
-		<beans:property name="url" value="jdbc:oracle:thin:@//10.120.147.250:1521/SFCTEST"></beans:property>
-		<beans:property name="username" value="H7108464"></beans:property>
-		<beans:property name="password" value="yongjun"></beans:property>
+		<beans:property name="url" value="jdbc:oracle:thin:@//10.67.38.39:1521/CLOUDMESTEST.CESBG.FOXCONN"></beans:property>
+		<beans:property name="username" value="TEST"></beans:property>
+		<beans:property name="password" value="SFCTEST"></beans:property>
 	</beans:bean>
 	<beans:bean  id ='configEntity' class ="org.foxconn.entity.ConfigEntity">
-		<beans:property name="fileDir" value="C:\\Users\\nnfoxconn\\Desktop\\cloudMesPerson\\MES_Project.document\\數據庫建制"></beans:property>
+		<beans:property name="fileDir" value="d:\\Users\\nnfoxconn\\Desktop\\cloudMesPerson\\MES_Project.document\\數據庫建制"></beans:property>
 	</beans:bean>
 </beans:beans>

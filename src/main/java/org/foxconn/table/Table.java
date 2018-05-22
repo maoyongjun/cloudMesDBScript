@@ -68,6 +68,9 @@ public class Table implements Comparable<Table>{
 	}
 
 	public String getSynonyms() {
+		if(null==synonyms){
+			return "CREATE OR REPLACE PUBLIC SYNONYM "+tableName + " FOR " + owner+"."+tableName;
+		}
 		return " CREATE OR REPLACE PUBLIC SYNONYM " + synonyms.getSYNONYM_NAME() + " FOR " + synonyms.getTABLE_OWNER()
 				+ "." + synonyms.getSYNONYM_NAME() + ";\n";
 	}
