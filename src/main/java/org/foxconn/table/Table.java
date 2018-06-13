@@ -173,7 +173,7 @@ public class Table implements Comparable<Table>{
 	
 	private void setDetailHeaderInit() {
 		StringBuilder stringBuilder = new StringBuilder("\n**"+sortno+"、"+tableName.trim()+"&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;"+tableDesc.trim()+"**\n");
-		stringBuilder.append("| 列名 | 類型 | 主鍵  | 索引 | 描述\n"
+		stringBuilder.append("\n| 列名 | 類型 | 主鍵  | 索引 | 描述\n"
 				+ "|---|---|---|---|---|\n");
 		for(AllColumns allColumn:allColumnsList){
 			stringBuilder.append(allColumn.getStringForTable()+"\n");
